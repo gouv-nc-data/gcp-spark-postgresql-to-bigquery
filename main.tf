@@ -4,7 +4,7 @@ locals {
 }
 
 resource "google_service_account" "service_account" {
-  account_id   = "sa-${var.dataset_name}"
+  account_id   = "sa-pg2bq-${var.dataset_name}"
   display_name = "Service Account created by terraform for ${var.project_id}"
   project      = var.project_id
 }
@@ -35,7 +35,7 @@ resource "google_project_iam_member" "dataflow_worker_bindings" {
 
 resource "google_project_iam_custom_role" "dataproc-custom-role" {
   project     = var.project_id
-  role_id     = "dataproc_custom_role_${var.dataset_name}"
+  role_id     = "pg2bq_dataproc_custom_role_${var.dataset_name}"
   title       = "Dataproc Custom Role"
   description = "Role custom pour pouvoir créer des job dataproc depuis scheduler"
   permissions = ["iam.serviceAccounts.actAs", "dataproc.workflowTemplates.instantiate"]
@@ -86,7 +86,7 @@ data "google_secret_manager_secret_version" "jdbc-url-secret" {
 
 resource "google_cloud_scheduler_job" "job" {
   project          = var.project_id
-  name             = "job-${var.dataset_name}"
+  name             = "pg2bq-job-${var.dataset_name}"
   schedule         = var.schedule
   time_zone        = "Pacific/Noumea"
   attempt_deadline = "320s"
