@@ -41,7 +41,7 @@ variable "schema" {
 variable "exclude" {
   type        = string
   description = "liste des tables à ne pas migrer"
-  default     = null
+  default     = ""
 }
 
 variable "mode" {
