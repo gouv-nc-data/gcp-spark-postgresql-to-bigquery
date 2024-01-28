@@ -35,7 +35,7 @@ resource "google_project_iam_member" "dataflow_worker_bindings" {
 
 resource "google_project_iam_member" "storage_admin_bindings" {
   project = var.project_id
-  role    = "roles/storage.objectAdmin "
+  role    = "roles/storage.objectAdmin"
   member  = "serviceAccount:${google_service_account.service_account.email}"
 }
 
