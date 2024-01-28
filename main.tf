@@ -33,6 +33,12 @@ resource "google_project_iam_member" "dataflow_worker_bindings" {
   member  = "serviceAccount:${google_service_account.service_account.email}"
 }
 
+resource "google_project_iam_member" "storage_admin_bindings" {
+  project = var.project_id
+  role    = "roles/storage.objectAdmin "
+  member  = "serviceAccount:${google_service_account.service_account.email}"
+}
+
 resource "google_project_iam_custom_role" "dataproc-custom-role" {
   project     = var.project_id
   role_id     = "pg2bq_dataproc_custom_role_${var.dataset_name}"
