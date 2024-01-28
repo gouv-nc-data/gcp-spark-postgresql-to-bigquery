@@ -35,7 +35,7 @@ resource "google_project_iam_member" "dataflow_worker_bindings" {
 
 resource "google_project_iam_member" "storage_admin_bindings" {
   project = var.project_id
-  role    = "roles/storage.objectAdmin"
+  role    = "roles/storage.objectViewer"
   member  = "serviceAccount:${google_service_account.service_account.email}"
 }
 
@@ -70,6 +70,13 @@ resource "google_project_iam_member" "cloud_scheduler_runner_bindings" {
 ####
 # Dataproc
 ####
+
+resource "google_storage_bucket_iam_member" "access_to_script" {
+  bucket = "bucket-prj-dinum-data-templates-66aa"
+  role   = "roles/storage.objectViewer"
+  member = "serviceAccount:${google_service_account.service_account.email}"
+}
+
 resource "google_project_service" "secretmanagerapi" {
   project = var.project_id
   service = "secretmanager.googleapis.com"
